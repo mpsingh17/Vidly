@@ -1,0 +1,40 @@
+﻿@model Vidly.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h1>@Model.Name</h1>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        @if (Model.BirthDate.HasValue)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </dt>
+
+            <dd>
+                @Model.BirthDate.Value.ToShortDateString()
+            </dd>
+        }
+        <dt>
+            Membership Type
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MembershipType.Name)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

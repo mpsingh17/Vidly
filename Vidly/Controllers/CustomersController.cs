@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -47,46 +48,52 @@ namespace Vidly.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            return View();
-        }
-
-        // POST: Customers/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            var membershipTypes = _context.MembershipType.ToList();
+            var viewModel = new CustomerFormViewModel
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                MembershipTypes = membershipTypes
+            };
+            ViewBag.Title = "Create";
+            return View("CustomerForm", viewModel);
         }
 
         // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+
+            if (customer == null)
+                return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipType.ToList()
+            };
+            ViewBag.Title = "Edit";
+            return View("CustomerForm", viewModel);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Customers/Create
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Save(Customer customer)
         {
-            try
+            if (customer.Id == 0)
             {
-                // TODO: Add update logic here
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.BirthDate = customer.BirthDate;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Customers");
+        }       
 
         // GET: Customers/Delete/5
         public ActionResult Delete(int id)

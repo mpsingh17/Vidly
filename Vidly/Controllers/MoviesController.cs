@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Vidly.Models;
 using Vidly.ViewModels;
+using System.Data.Entity.Validation;
 
 namespace Vidly.Controllers
 {
@@ -16,36 +17,6 @@ namespace Vidly.Controllers
         public MoviesController()
         {
             _context = new ApplicationDbContext();
-        }
-
-        // GET: Movies
-        public ActionResult Random()
-        {
-            var movie = new Movie { Name = "Don" };
-            var customers = new List<Customer>
-            {
-                new Customer { Name = "Cust 1" },
-                new Customer { Name = "Cust 2" }
-            };
-
-            var vm = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(vm);
-        }
-
-        public ActionResult Edit(int? id)
-        {
-            return Content("id=" + id);
-        }
-
-        [Route("movies/released/{year}/{month:regex(\\d{2}):range(1,12)}")]
-        public ActionResult ByReleaseDate(int year, int month)
-        {
-            return Content($"{year}/{month}");
         }
 
         //GET: movies/index
@@ -68,6 +39,65 @@ namespace Vidly.Controllers
                 return View(movie);
             }
             return HttpNotFound();
+        }
+
+        //GET: movies/create
+        public ActionResult Create()
+        {
+            var vm = new MovieFormViewModel
+            {
+                Genres = _context.Genre.ToList()
+            };
+
+            ViewBag.Title = "Create";
+            return View("MoviesForm", vm);
+        }
+
+        //GET: movies/edit/1
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movie.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+            
+            var vm = new MovieFormViewModel
+            {
+                Movie = movie,
+                Genres = _context.Genre.ToList()
+            };
+
+            ViewBag.Title = "Edit";
+            return View("MoviesForm", vm);
+        }
+
+        //POST: movies/save
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movie.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movie.Single(m => m.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.Stock = movie.Stock;
+                movieInDb.GenreId = movie.GenreId;
+            }
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
+            
+            return RedirectToAction("Index");
         }
     }
 }

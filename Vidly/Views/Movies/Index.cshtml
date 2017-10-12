@@ -4,7 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Movies</h2>
+<h1>Movies</h1>
+@Html.ActionLink("Create New", "Create", "Movies", null, new { @class = "btn btn-primary"})
+<br />
 
 <table class="table">
     <tr>
@@ -19,7 +21,7 @@
 @foreach (var movie in Model) {
     <tr>
         <td>
-            @Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, new { @class = "btn btn-link" })            
+            @Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, new { @class = "btn btn-link" })            
         </td>
         <td>
             @movie.Genre.Name

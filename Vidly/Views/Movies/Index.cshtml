@@ -4,29 +4,78 @@
     ViewBag.Title = "Index";
 }
 
-<h1>Movies</h1>
-@Html.ActionLink("Create New", "Create", "Movies", null, new { @class = "btn btn-primary"})
+<br />
+@Html.ActionLink("Create Movie", "Create", "Movies", null, new { @class = "btn btn-primary"})
+<hr />
 <br />
 
-<table class="table">
-    <tr>
-        <th>
-            Movie
-        </th>
-        <th>
-            Genre
-        </th>
-    </tr>
-
-@foreach (var movie in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, new { @class = "btn btn-link" })            
-        </td>
-        <td>
-            @movie.Genre.Name
-        </td>
-    </tr>
-}
-
+<table class="table table-striped" id="movies">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Release date</th>
+            <th>Stock</th>
+            <th>Genre</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
 </table>
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, movie) {
+                            return `<a href="/movies/edit/${movie.id}">${data}</a>`;
+                        }
+                    },
+                    {
+                        data: "releaseDate",
+                        render: function (data) {
+                            //return `${data.getMonth() + 1}/${data.getDate()}/${data.getFullYear()}`;
+                            return data.substr(0,10);
+                        }
+                    },
+                    {
+                        data: "stock"
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return `<button data-movie-id="${data}" class="btn-link js-delete">Delete</button>`;
+                        }
+                    }
+                ]
+            });
+
+            table.on("click", ".js-delete", function () {
+                const button = $(this);
+                
+                bootbox.confirm("Are you sure you want to delete this movie?", function (result) {
+                    if (result) {
+                        const userId = button.attr("data-movie-id");
+                        $.ajax({
+                            url: `/api/movies/${userId}`,
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

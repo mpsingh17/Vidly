@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Vidly.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<h1>Available Movies</h1>
+<hr />
+
+<table class="table table-striped" id="movies">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Release date</th>
+            <th>Stock</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "releaseDate",
+                        render: function (data) {
+                            //return `${data.getMonth() + 1}/${data.getDate()}/${data.getFullYear()}`;
+                            return data.substr(0,10);
+                        }
+                    },
+                    {
+                        data: "stock"
+                    },
+                    {
+                        data: "genre.name"
+                    }
+                ]
+            });
+        });
+    </script>
+}

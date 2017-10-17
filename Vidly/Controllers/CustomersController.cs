@@ -24,9 +24,16 @@ namespace Vidly.Controllers
         }
 
         // GET: Customers
-        public ActionResult Index() => View();
+        public ActionResult Index()
+        {
+            if (User.IsInRole(RoleName.CanManageMovies))
+            {
+                return View("List");
+            }
+            return View("ReadOnlyList");
+        }
 
-        // GET: Customers/Details/5
+        // GET: Customers/Details/id
         public ActionResult Details(int id)
         {
             var customer = _context.Customers
@@ -40,6 +47,7 @@ namespace Vidly.Controllers
         }
 
         // GET: Customers/Create
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Create()
         {
             var membershipTypes = _context.MembershipType.ToList();
@@ -52,7 +60,8 @@ namespace Vidly.Controllers
             return View("CustomerForm", viewModel);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Customers/Edit/id
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
@@ -72,6 +81,7 @@ namespace Vidly.Controllers
         // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Save(Customer customer)
         {
             if (!ModelState.IsValid)
@@ -102,26 +112,5 @@ namespace Vidly.Controllers
             return RedirectToAction("Index", "Customers");
         }       
 
-        // GET: Customers/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Customers/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

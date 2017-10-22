@@ -37,6 +37,7 @@ namespace Vidly.ViewModels
                 return (Id != 0) ? "Edit Movie" : "Create Movie";
             }
         }
+
         //constructor
         public MovieFormViewModel()
         {

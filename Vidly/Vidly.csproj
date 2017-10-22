@@ -215,6 +215,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\MoviesController.cs" />
+    <Compile Include="Controllers\Api\NewRentalsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -287,6 +288,18 @@
     <Compile Include="Migrations\201710170322414_OverridePhoneNumberPropOfAppUser.Designer.cs">
       <DependentUpon>201710170322414_OverridePhoneNumberPropOfAppUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710220323327_AddRentalAssociationOfCustomerMovie.cs" />
+    <Compile Include="Migrations\201710220323327_AddRentalAssociationOfCustomerMovie.Designer.cs">
+      <DependentUpon>201710220323327_AddRentalAssociationOfCustomerMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710220452483_AddNumberAvailableToMovie.cs" />
+    <Compile Include="Migrations\201710220452483_AddNumberAvailableToMovie.Designer.cs">
+      <DependentUpon>201710220452483_AddNumberAvailableToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710220824127_PopulateCustomers.cs" />
+    <Compile Include="Migrations\201710220824127_PopulateCustomers.Designer.cs">
+      <DependentUpon>201710220824127_PopulateCustomers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -297,11 +310,13 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CustomerFormViewModel.cs" />
     <Compile Include="ViewModels\MovieFormViewModel.cs" />
+    <Compile Include="ViewModels\NewRentalDto.cs" />
     <Compile Include="ViewModels\RandomMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -610,6 +625,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710170322414_OverridePhoneNumberPropOfAppUser.resx">
       <DependentUpon>201710170322414_OverridePhoneNumberPropOfAppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710220323327_AddRentalAssociationOfCustomerMovie.resx">
+      <DependentUpon>201710220323327_AddRentalAssociationOfCustomerMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710220452483_AddNumberAvailableToMovie.resx">
+      <DependentUpon>201710220452483_AddNumberAvailableToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710220824127_PopulateCustomers.resx">
+      <DependentUpon>201710220824127_PopulateCustomers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

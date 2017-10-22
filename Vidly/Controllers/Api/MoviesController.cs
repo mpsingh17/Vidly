@@ -50,6 +50,7 @@ namespace Vidly.Controllers.Api
             var movie = Mapper.Map<MovieDto, Movie>(movieDto);
 
             movie.DateAdded = DateTime.Now;
+            movie.NumberAvailable = movieDto.Stock;
 
             _context.Movie.Add(movie);
             _context.SaveChanges();

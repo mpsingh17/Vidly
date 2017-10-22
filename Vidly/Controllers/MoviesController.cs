@@ -7,6 +7,7 @@ using System.Data.Entity;
 using Vidly.Models;
 using Vidly.ViewModels;
 using System.Data.Entity.Validation;
+using AutoMapper;
 
 namespace Vidly.Controllers
 {
@@ -74,29 +75,27 @@ namespace Vidly.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleName.CanManageMovies)]
-        public ActionResult Save(Movie movie)
+        public ActionResult Save(MovieFormViewModel movieViewModel)
         {
             if (!ModelState.IsValid)
             {
-                var vm = new MovieFormViewModel(movie)
-                {
-                    Genres = _context.Genre.ToList()  
-                };
+                movieViewModel.Genres = _context.Genre.ToList();
                 ViewBag.Title = "Create";
-                return View("MoviesForm", vm);
+                return View("MoviesForm", movieViewModel);
             }
-            if (movie.Id == 0)
+            if (movieViewModel.Id == 0)
             {
+                var movie = Mapper.Map<MovieFormViewModel, Movie>(movieViewModel);
+
                 movie.DateAdded = DateTime.Now;
+                movie.NumberAvailable = movie.Stock;
                 _context.Movie.Add(movie);
             }
             else
             {
-                var movieInDb = _context.Movie.Single(m => m.Id == movie.Id);
-                movieInDb.Name = movie.Name;
-                movieInDb.ReleaseDate = movie.ReleaseDate;
-                movieInDb.Stock = movie.Stock;
-                movieInDb.GenreId = movie.GenreId;
+                var movieInDb = _context.Movie.Single(m => m.Id == movieViewModel.Id);
+                var movie = Mapper.Map(movieViewModel, movieInDb);
+                movie.NumberAvailable = movie.Stock;
             }
 
             try

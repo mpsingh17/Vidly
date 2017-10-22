@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Vidly.Dtos;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.App_Start
 {
@@ -21,6 +22,10 @@ namespace Vidly.App_Start
             //mapping movie and movieDto
             Mapper.CreateMap<Movie, MovieDto>();
             Mapper.CreateMap<MovieDto, Movie>();
+
+            //mapping movie and movieFormViewModel
+            Mapper.CreateMap<Movie, MovieFormViewModel>();
+            Mapper.CreateMap<MovieFormViewModel, Movie>();
 
             //mapping membershipType and membershipTypeDto
             Mapper.CreateMap<MembershipType, MembershipTypeDto>();

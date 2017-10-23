@@ -24,7 +24,7 @@ namespace Vidly.Controllers.Api
             var customer = _context.Customers
                                    .Single(c => c.Id == newRentalDto.CustomerId);
 
-            var movies = _context.Movie
+            var movies = _context.Movies
                                  .Where(m => newRentalDto.MovieIds.Contains(m.Id))
                                  .ToList();
 

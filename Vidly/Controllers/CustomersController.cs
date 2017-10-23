@@ -50,7 +50,7 @@ namespace Vidly.Controllers
         [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Create()
         {
-            var membershipTypes = _context.MembershipType.ToList();
+            var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
                 Customer = new Customer(),
@@ -72,7 +72,7 @@ namespace Vidly.Controllers
             var viewModel = new CustomerFormViewModel
             {
                 Customer = customer,
-                MembershipTypes = _context.MembershipType.ToList()
+                MembershipTypes = _context.MembershipTypes.ToList()
             };
             ViewBag.Title = "Edit";
             return View("CustomerForm", viewModel);
@@ -89,7 +89,7 @@ namespace Vidly.Controllers
                 var vm = new CustomerFormViewModel
                 {
                     Customer = customer,
-                    MembershipTypes = _context.MembershipType.ToList()
+                    MembershipTypes = _context.MembershipTypes.ToList()
                 };
                 ViewBag.Title = "Create";
                 return View("CustomerForm", vm);

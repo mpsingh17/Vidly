@@ -33,7 +33,7 @@ namespace Vidly.Controllers
         //GET: movies/details/1
         public ActionResult Details(int id)
         {
-            var movie = _context.Movie
+            var movie = _context.Movies
                                 .Include(m => m.Genre)
                                 .SingleOrDefault(m => m.Id == id);
             if (movie != null)
@@ -49,7 +49,7 @@ namespace Vidly.Controllers
         {
             var vm = new MovieFormViewModel
             {
-                Genres = _context.Genre.ToList(),
+                Genres = _context.Genres.ToList(),
             };
 
             return View("MoviesForm", vm);
@@ -59,14 +59,14 @@ namespace Vidly.Controllers
         [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
-            var movie = _context.Movie.SingleOrDefault(m => m.Id == id);
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
                 return HttpNotFound();
             
             var vm = new MovieFormViewModel(movie)
             {
-                Genres = _context.Genre.ToList()
+                Genres = _context.Genres.ToList()
             };
             return View("MoviesForm", vm);
         }
@@ -79,7 +79,7 @@ namespace Vidly.Controllers
         {
             if (!ModelState.IsValid)
             {
-                movieViewModel.Genres = _context.Genre.ToList();
+                movieViewModel.Genres = _context.Genres.ToList();
                 ViewBag.Title = "Create";
                 return View("MoviesForm", movieViewModel);
             }
@@ -89,11 +89,11 @@ namespace Vidly.Controllers
 
                 movie.DateAdded = DateTime.Now;
                 movie.NumberAvailable = movie.Stock;
-                _context.Movie.Add(movie);
+                _context.Movies.Add(movie);
             }
             else
             {
-                var movieInDb = _context.Movie.Single(m => m.Id == movieViewModel.Id);
+                var movieInDb = _context.Movies.Single(m => m.Id == movieViewModel.Id);
                 var movie = Mapper.Map(movieViewModel, movieInDb);
                 movie.NumberAvailable = movie.Stock;
             }

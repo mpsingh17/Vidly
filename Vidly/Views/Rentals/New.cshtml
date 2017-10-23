@@ -5,7 +5,7 @@
 
 <h2>New Rental Form</h2>
 
-<form>
+<form id="newRental">
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
@@ -34,6 +34,7 @@
     <script>
         $(document).ready(function () {
             var vm = {
+                customerId: '',
                 movieIds: []
             };
 
@@ -58,8 +59,7 @@
                 source: customers
             })
            .on("typeahead:select", function (e, customer) {
-               vm.customer = customer;
-                console.log(vm);
+               vm.customerId = customer.id;
             });
 
             //movie typeahead
@@ -88,8 +88,25 @@
                 $("#movie").typeahead("val", "");
 
                 vm.movieIds.push(movie.id);
+                console.log(vm);
             });
-    });
+
+            $("#newRental").submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "/api/NewRentals",
+                    method: "post",
+                    data: vm
+                })
+                    .done(function () {
+                        console.log("done");
+                })
+                .fail(function () {
+
+                })
+
+            });
+        });
     </script>
 }
 

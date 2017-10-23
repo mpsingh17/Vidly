@@ -17,6 +17,7 @@ namespace Vidly.Controllers.Api
         {
             _context = new ApplicationDbContext();
         }
+
         [HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRentalDto)
         {
@@ -24,11 +25,14 @@ namespace Vidly.Controllers.Api
                                    .Single(c => c.Id == newRentalDto.CustomerId);
 
             var movies = _context.Movie
-                                 .Where(m => newRentalDto.MovieIds.Contains(m.Id));
-
+                                 .Where(m => newRentalDto.MovieIds.Contains(m.Id))
+                                 .ToList();
 
             foreach (var movie in movies)
             {
+                if (movie.NumberAvailable == 0)
+                    return BadRequest("Movie is not available.");
+
                 Rental rental = new Rental
                 {
                     Customer = customer,
@@ -36,7 +40,9 @@ namespace Vidly.Controllers.Api
                     DateRented = DateTime.Now
                 };
                 _context.Rentals.Add(rental);
-                movie.NumberAvailable -= 1;
+
+                //decrease movie stock by 1.
+                movie.NumberAvailable--;
             }
             _context.SaveChanges();
             return Ok();

@@ -88,7 +88,6 @@
                 $("#movie").typeahead("val", "");
 
                 vm.movieIds.push(movie.id);
-                console.log(vm);
             });
 
             $("#newRental").submit(function (e) {
@@ -98,11 +97,11 @@
                     method: "post",
                     data: vm
                 })
-                    .done(function () {
-                        console.log("done");
+                .done(function () {
+                    toastr.success("Rentals added successfully.")        
                 })
                 .fail(function () {
-
+                    toastr.fail("Something expected happen");
                 })
 
             });

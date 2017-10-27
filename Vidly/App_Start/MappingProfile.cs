@@ -23,15 +23,19 @@ namespace Vidly.App_Start
             Mapper.CreateMap<Movie, MovieDto>();
             Mapper.CreateMap<MovieDto, Movie>();
 
-            //mapping movie and movieFormViewModel
-            Mapper.CreateMap<Movie, MovieFormViewModel>();
-            Mapper.CreateMap<MovieFormViewModel, Movie>();
-
             //mapping membershipType and membershipTypeDto
             Mapper.CreateMap<MembershipType, MembershipTypeDto>();
 
             //mapping genre to genreDto
             Mapper.CreateMap<Genre, GenreDto>();
+
+            //mapping movie and movieFormViewModel
+            Mapper.CreateMap<Movie, MovieFormViewModel>();
+            Mapper.CreateMap<MovieFormViewModel, Movie>();
+
+            //mapping customer to customerFormViewModel and vice-versa.
+            Mapper.CreateMap<Customer, CustomerFormViewModel>();
+            Mapper.CreateMap<CustomerFormViewModel, Customer>();
         }
     }
 }

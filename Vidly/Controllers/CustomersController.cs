@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Vidly.Models;
 using Vidly.ViewModels;
+using AutoMapper;
 
 namespace Vidly.Controllers
 {
@@ -13,6 +14,7 @@ namespace Vidly.Controllers
     {
         private ApplicationDbContext _context;
 
+        // constructor
         public CustomersController()
         {
             _context = new ApplicationDbContext();
@@ -51,66 +53,69 @@ namespace Vidly.Controllers
         public ActionResult Create()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new CustomerFormViewModel
+            var vm = new CustomerFormViewModel
             {
-                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
-            ViewBag.Title = "Create";
-            return View("CustomerForm", viewModel);
+            vm.Title = "Create Customer";
+            return View("CustomerForm", vm);
         }
 
         // GET: Customers/Edit/id
         [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers
+                                   .Include(m => m.MembershipType)
+                                   .SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
                 return HttpNotFound();
 
-            var viewModel = new CustomerFormViewModel
-            {
-                Customer = customer,
-                MembershipTypes = _context.MembershipTypes.ToList()
-            };
-            ViewBag.Title = "Edit";
-            return View("CustomerForm", viewModel);
+            var vm = Mapper.Map<Customer, CustomerFormViewModel>(customer);
+            vm.MembershipTypes = _context.MembershipTypes.ToList();
+            vm.Title = "Edit Customer";
+
+            return View("CustomerForm", vm);
         }
 
         // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleName.CanManageMovies)]
-        public ActionResult Save(Customer customer)
+        public ActionResult Save(CustomerFormViewModel customerVm)
         {
             if (!ModelState.IsValid)
             {
                 var vm = new CustomerFormViewModel
                 {
-                    Customer = customer,
+                    Title = "Create Customer",
                     MembershipTypes = _context.MembershipTypes.ToList()
                 };
-                ViewBag.Title = "Create";
                 return View("CustomerForm", vm);
             }
 
-            if (customer.Id == 0)
+            if (customerVm.Id == 0)
             {
+                var customer = Mapper.Map<CustomerFormViewModel, Customer>(customerVm);
                 _context.Customers.Add(customer);
             }
             else
             {
-                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
-                customerInDb.Name = customer.Name;
-                customerInDb.BirthDate = customer.BirthDate;
-                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
-                customerInDb.MembershipTypeId = customer.MembershipTypeId;
-            }
+                var customerInDb = _context.Customers.Single(c => c.Id == customerVm.Id);
 
+                if (customerInDb == null)
+                    return HttpNotFound();
+
+                Mapper.Map(customerVm, customerInDb);
+
+                //customerInDb.Name = customer.Name;
+                //customerInDb.BirthDate = customer.BirthDate;
+                //customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                //customerInDb.MembershipTypeId = customer.MembershipTypeId;
+            }
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
-        }       
-
+        }
     }
 }

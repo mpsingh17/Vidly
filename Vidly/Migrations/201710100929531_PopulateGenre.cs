@@ -16,6 +16,7 @@ namespace Vidly.Migrations
         
         public override void Down()
         {
+            Sql("DELETE FROM GENRES");
         }
     }
 }

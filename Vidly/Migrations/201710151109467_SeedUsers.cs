@@ -17,6 +17,9 @@ namespace Vidly.Migrations
         
         public override void Down()
         {
+            Sql("DELETE FROM AspNetUsers");
+            Sql("DELETE FROM AspNetRoles");
+            Sql("DELETE FROM AspNetUserRoles");
         }
     }
 }

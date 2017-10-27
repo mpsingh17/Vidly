@@ -23,13 +23,28 @@ namespace Vidly.Controllers.Api
         }
 
         //GET: /api/customers
-        public IHttpActionResult GetCustomers(string query = null) => Ok(
-            _context.Customers
-            .Include(c => c.MembershipType)
-            .Where(c => c.Name.Contains(query))
-            .ToList()
-            .Select(Mapper.Map<Customer, CustomerDto>)
-        );
+        public IHttpActionResult GetCustomers(string query = null)
+        {
+
+            if (query != null)
+            {
+                var customers = _context.Customers
+                    .Include(c => c.MembershipType)
+                    .Where(c => c.Name.Contains(query))
+                    .ToList()
+                    .Select(Mapper.Map<Customer, CustomerDto>);
+                return Ok(customers);
+            }
+            else
+            {
+                var customers = _context.Customers
+                    .Include(c => c.MembershipType)
+                    .ToList()
+                    .Select(Mapper.Map<Customer, CustomerDto>);
+                return Ok(customers);
+            }
+            
+        }
 
         //GET: /api/customers/1
         public IHttpActionResult GetCustomer(int id)

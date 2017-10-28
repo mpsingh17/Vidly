@@ -80,7 +80,6 @@ namespace Vidly.Controllers
             if (!ModelState.IsValid)
             {
                 movieViewModel.Genres = _context.Genres.ToList();
-                ViewBag.Title = "Create";
                 return View("MoviesForm", movieViewModel);
             }
             if (movieViewModel.Id == 0)
@@ -94,6 +93,7 @@ namespace Vidly.Controllers
             else
             {
                 var movieInDb = _context.Movies.Single(m => m.Id == movieViewModel.Id);
+                
                 var movie = Mapper.Map(movieViewModel, movieInDb);
                 movie.NumberAvailable = movie.Stock;
             }

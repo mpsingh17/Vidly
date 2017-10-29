@@ -36,3 +36,7 @@ input.error {
 .validation-summary-errors {
     color: red;
 }
+
+.checkbox label {
+    padding-left: 0;
+}

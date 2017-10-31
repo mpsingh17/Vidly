@@ -25,6 +25,7 @@ namespace Vidly.Models
         {
             modelBuilder.Configurations.Add(new CustomerConfiguration());
             modelBuilder.Configurations.Add(new MembershipTypeConfiguration());
+            modelBuilder.Configurations.Add(new GenreConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

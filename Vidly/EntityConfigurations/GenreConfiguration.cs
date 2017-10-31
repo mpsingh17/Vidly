@@ -12,6 +12,11 @@ namespace Vidly.EntityConfigurations
                 .HasMaxLength(255)
                 .IsRequired();
 
+            // One to many relation with movies.
+            HasMany(g => g.Movies)
+                .WithRequired(m => m.Genre)
+                .HasForeignKey(m => m.GenreId);
+
         }
     }
 }

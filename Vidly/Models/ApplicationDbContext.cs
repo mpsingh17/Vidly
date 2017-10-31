@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
+using Vidly.EntityConfigurations;
 
 namespace Vidly.Models
 {
@@ -22,6 +19,14 @@ namespace Vidly.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new CustomerConfiguration());
+            modelBuilder.Configurations.Add(new MembershipTypeConfiguration());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

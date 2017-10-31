@@ -229,6 +229,7 @@
     <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="EntityConfigurations\CustomerConfiguration.cs" />
+    <Compile Include="EntityConfigurations\MembershipTypeConfiguration.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -304,6 +305,10 @@
     <Compile Include="Migrations\201710220824127_PopulateCustomers.cs" />
     <Compile Include="Migrations\201710220824127_PopulateCustomers.Designer.cs">
       <DependentUpon>201710220824127_PopulateCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310525316_ChangeColumnsOfCustomerWithFluentAPI.cs" />
+    <Compile Include="Migrations\201710310525316_ChangeColumnsOfCustomerWithFluentAPI.Designer.cs">
+      <DependentUpon>201710310525316_ChangeColumnsOfCustomerWithFluentAPI.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -665,6 +670,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710220824127_PopulateCustomers.resx">
       <DependentUpon>201710220824127_PopulateCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310525316_ChangeColumnsOfCustomerWithFluentAPI.resx">
+      <DependentUpon>201710310525316_ChangeColumnsOfCustomerWithFluentAPI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

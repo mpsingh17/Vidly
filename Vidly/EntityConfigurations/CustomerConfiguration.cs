@@ -18,9 +18,6 @@ namespace Vidly.EntityConfigurations
             Property(c => c.MembershipTypeId)
                 .HasColumnName("MembershipId");
 
-            // Relation configuration
-            //HasRequired(c => c.MembershipType)
-            //    .WithRequiredDependent(m => m.Customer);
         }
     }
 }

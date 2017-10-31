@@ -11,8 +11,9 @@ namespace Vidly.EntityConfigurations
             HasKey(m => m.Id);
 
             // Relationship configuration
-            //HasRequired(m => m.Customer)
-            //    .WithRequiredPrincipal(c => c.MembershipType);
+            HasMany(m => m.Customer)
+                .WithRequired(c => c.MembershipType)
+                .HasForeignKey(c => c.MembershipTypeId);
         }
     }
 }

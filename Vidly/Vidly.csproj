@@ -232,6 +232,7 @@
     <Compile Include="EntityConfigurations\GenreConfiguration.cs" />
     <Compile Include="EntityConfigurations\MembershipTypeConfiguration.cs" />
     <Compile Include="EntityConfigurations\MovieConfiguration.cs" />
+    <Compile Include="EntityConfigurations\RentalConfiguration.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -311,6 +312,10 @@
     <Compile Include="Migrations\201710310525316_ChangeColumnsOfCustomerWithFluentAPI.cs" />
     <Compile Include="Migrations\201710310525316_ChangeColumnsOfCustomerWithFluentAPI.Designer.cs">
       <DependentUpon>201710310525316_ChangeColumnsOfCustomerWithFluentAPI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711010052246_AddRelationAmongMovieCustomerRental.cs" />
+    <Compile Include="Migrations\201711010052246_AddRelationAmongMovieCustomerRental.Designer.cs">
+      <DependentUpon>201711010052246_AddRelationAmongMovieCustomerRental.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -675,6 +680,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710310525316_ChangeColumnsOfCustomerWithFluentAPI.resx">
       <DependentUpon>201710310525316_ChangeColumnsOfCustomerWithFluentAPI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711010052246_AddRelationAmongMovieCustomerRental.resx">
+      <DependentUpon>201711010052246_AddRelationAmongMovieCustomerRental.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

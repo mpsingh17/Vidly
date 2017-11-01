@@ -22,5 +22,7 @@ namespace Vidly.Models
 
         public Genre Genre { get; set; }
         public int GenreId { get; set; }
+
+        public ICollection<Rental> Rentals { get; set; }
     }
 }

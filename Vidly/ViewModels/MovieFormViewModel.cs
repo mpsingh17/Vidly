@@ -23,8 +23,8 @@ namespace Vidly.ViewModels
         public DateTime? ReleaseDate { get; set; }
 
         [Required]
-        [Display(Name = "Number in stock")]
         [Range(1, 20)]
+        [Display(Name = "Number in stock")]
         public int? Stock { get; set; }
 
         [Required]

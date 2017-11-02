@@ -15,9 +15,7 @@ namespace Vidly.EntityConfigurations
             Property(c => c.BirthDate)
                 .IsOptional();
 
-            Property(c => c.MembershipTypeId)
-                .HasColumnName("MembershipId");
-
+            // Relationship configuration
             HasMany(c => c.Rentals)
                 .WithRequired(r => r.Customer)
                 .HasForeignKey(r => r.CustomerId);

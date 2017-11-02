@@ -317,6 +317,10 @@
     <Compile Include="Migrations\201711010052246_AddRelationAmongMovieCustomerRental.Designer.cs">
       <DependentUpon>201711010052246_AddRelationAmongMovieCustomerRental.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.cs" />
+    <Compile Include="Migrations\201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.Designer.cs">
+      <DependentUpon>201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -686,6 +690,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711010052246_AddRelationAmongMovieCustomerRental.resx">
       <DependentUpon>201711010052246_AddRelationAmongMovieCustomerRental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.resx">
+      <DependentUpon>201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

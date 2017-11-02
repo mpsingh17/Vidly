@@ -15,6 +15,9 @@ namespace Vidly.EntityConfigurations
             Property(c => c.BirthDate)
                 .IsOptional();
 
+            Property(c => c.ProfileImagePath)
+                .IsOptional();
+
             // Relationship configuration
             HasMany(c => c.Rentals)
                 .WithRequired(r => r.Customer)

@@ -16,7 +16,7 @@ namespace Vidly.Models
 
         public DateTime? BirthDate { get; set; }
 
-        //public string ProfileImagePath { get; set; }
+        public string ProfileImagePath { get; set; }
 
         public byte MembershipTypeId { get; set; }
         public MembershipType MembershipType { get; set; }

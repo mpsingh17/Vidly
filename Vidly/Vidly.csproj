@@ -321,6 +321,10 @@
     <Compile Include="Migrations\201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.Designer.cs">
       <DependentUpon>201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711020028575_AddProfileImagePathColumnToCustomersTable.cs" />
+    <Compile Include="Migrations\201711020028575_AddProfileImagePathColumnToCustomersTable.Designer.cs">
+      <DependentUpon>201711020028575_AddProfileImagePathColumnToCustomersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -693,6 +697,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.resx">
       <DependentUpon>201711020023335_RenameMembershipIdToMembershipTypeIdInCustomersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711020028575_AddProfileImagePathColumnToCustomersTable.resx">
+      <DependentUpon>201711020028575_AddProfileImagePathColumnToCustomersTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

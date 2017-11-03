@@ -7,14 +7,20 @@ namespace Vidly.Services
 {
     public class Image : IImageService
     {
-        public void AddImage(HttpPostedFileBase image)
+        public string AddImage(HttpServerUtilityBase Server, HttpPostedFileBase image)
         {
-            string imageName = Path.GetFileNameWithoutExtension(image.FileName);
+            // Prepare image name.
+            string imageNameWithoutExt = Path.GetFileNameWithoutExtension(image.FileName);
             string extension = Path.GetExtension(image.FileName);
-            string imagePathToStoreInDb = imageName + DateTime.Now.ToString("yyyymmssfff") + extension;
-            
-            
+            string imageNameWithExt = imageNameWithoutExt + DateTime.Now.ToString("yyyymmssfff") + extension;
 
+            // Saving image to server.
+            string imagePath = Path.Combine(Server.MapPath("~/Images"), imageNameWithExt);
+            image.SaveAs(imagePath);
+
+            // Image URL to store in Database.
+            string imageUrl = Path.Combine("/Images/", imageNameWithExt);
+            return imageUrl;
         }
     }
 }

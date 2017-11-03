@@ -8,17 +8,20 @@ using Vidly.ViewModels;
 using AutoMapper;
 using System.IO;
 using System.Web;
+using Vidly.Services;
 
 namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
         private ApplicationDbContext _context;
+        private IImageService _imageService;
 
         // constructor
         public CustomersController()
         {
             _context = new ApplicationDbContext();
+            _imageService = new Image();
         }
 
         protected override void Dispose(bool disposing)
@@ -99,7 +102,8 @@ namespace Vidly.Controllers
             if (customerVm.Id == 0)
             {
                 var customer = Mapper.Map<CustomerFormViewModel, Customer>(customerVm);
-                customer.ProfileImagePath = StoreImage(customerVm.Image);
+                // Calling imageSerivce to store image and get image Path
+                customer.ProfileImagePath = _imageService.AddImage(Server, customerVm.Image);
                 _context.Customers.Add(customer);
             }
             else
@@ -113,23 +117,6 @@ namespace Vidly.Controllers
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
-        }
-
-        // Store image to Images folder.
-        private string StoreImage(HttpPostedFileBase image)
-        {
-            // Prepare image name.
-            string imageNameWithoutExt = Path.GetFileNameWithoutExtension(image.FileName);
-            string extension = Path.GetExtension(image.FileName);
-            string imageNameWithExt = imageNameWithoutExt + DateTime.Now.ToString("yyyymmssfff") + extension;
-
-            // Saving image to server.
-            string imagePath = Path.Combine(Server.MapPath("~/Images"), imageNameWithExt);
-            image.SaveAs(imagePath);
-
-            // Image URL to store in Database.
-            string imageUrl = Path.Combine("/Images/", imageNameWithExt);
-            return imageUrl;
         }
     }
 }

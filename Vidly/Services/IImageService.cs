@@ -9,6 +9,6 @@ namespace Vidly.Services
 {
     interface IImageService
     {
-        void AddImage(HttpPostedFileBase image);
+        string AddImage(HttpServerUtilityBase Server, HttpPostedFileBase image);
     }
 }

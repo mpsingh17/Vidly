@@ -339,6 +339,8 @@
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ICustomer.cs" />
+    <Compile Include="Services\IImageService.cs" />
+    <Compile Include="Services\Image.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CustomerFormViewModel.cs" />
     <Compile Include="ViewModels\MovieFormViewModel.cs" />
@@ -469,6 +471,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Mani20175510273.jpg" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootbox.js" />

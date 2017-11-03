@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Vidly.Models;
 using Vidly.ViewModels;
 using AutoMapper;
+using System.IO;
+using System.Web;
 
 namespace Vidly.Controllers
 {
@@ -98,6 +99,7 @@ namespace Vidly.Controllers
             if (customerVm.Id == 0)
             {
                 var customer = Mapper.Map<CustomerFormViewModel, Customer>(customerVm);
+                customer.ProfileImagePath = StoreImage(customerVm.Image);
                 _context.Customers.Add(customer);
             }
             else
@@ -108,14 +110,26 @@ namespace Vidly.Controllers
                     return HttpNotFound();
 
                 Mapper.Map(customerVm, customerInDb);
-
-                //customerInDb.Name = customer.Name;
-                //customerInDb.BirthDate = customer.BirthDate;
-                //customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
-                //customerInDb.MembershipTypeId = customer.MembershipTypeId;
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
+        }
+
+        // Store image to Images folder.
+        private string StoreImage(HttpPostedFileBase image)
+        {
+            // Prepare image name.
+            string imageNameWithoutExt = Path.GetFileNameWithoutExtension(image.FileName);
+            string extension = Path.GetExtension(image.FileName);
+            string imageNameWithExt = imageNameWithoutExt + DateTime.Now.ToString("yyyymmssfff") + extension;
+
+            // Saving image to server.
+            string imagePath = Path.Combine(Server.MapPath("~/Images"), imageNameWithExt);
+            image.SaveAs(imagePath);
+
+            // Image URL to store in Database.
+            string imageUrl = Path.Combine("/Images/", imageNameWithExt);
+            return imageUrl;
         }
     }
 }

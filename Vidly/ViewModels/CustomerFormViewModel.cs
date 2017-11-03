@@ -22,6 +22,8 @@ namespace Vidly.ViewModels
         [Display(Name = "Date of Birth")]
         public DateTime? BirthDate { get; set; }
 
+        public HttpPostedFileBase Image { get; set; }
+
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
 
